@@ -1,12 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import Login from './src/screens/Login';
+import useCustomFonts from './assets/fonts/useFonts';
 
 export default function App() {
+  const [fontsLoaded] = useCustomFonts();
+
+  if(!fontsLoaded) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
+      <SafeAreaView>
+        <Login/>
+      </SafeAreaView>
     </View>
   );
 }
@@ -14,8 +23,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#292929',
+    marginTop: 20,
+    padding: 15,
   },
 });
