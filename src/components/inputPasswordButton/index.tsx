@@ -2,8 +2,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from "reac
 import { useState } from "react";
 import icon from "../../assets/icons/passIcon.png";
 
-const InputPasswordButton = ({title, place}) => {
-    const [text, onChangeText] = useState('');
+const InputPasswordButton = ({title, place, state, valuePassword}) => {
     const [status, onChangeStatus] = useState(true);
 
     const handleStatus = () => {
@@ -14,8 +13,10 @@ const InputPasswordButton = ({title, place}) => {
         <View>
             <Text style={style.title}> {title}:</Text>
             <View style={style.containerInput}>
-                <TextInput style={style.input} onChangeText={onChangeText} 
-                    value={text} 
+                <TextInput 
+                    style={style.input} 
+                    onChangeText={state} 
+                    value={valuePassword} 
                     placeholder={place} 
                     placeholderTextColor="#fff"
                     secureTextEntry={status}    

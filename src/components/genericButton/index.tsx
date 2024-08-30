@@ -1,8 +1,13 @@
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const GenericButton = ({label, url}) => {
+const GenericButton = ({label, url, data}) => {
+    const callback = async () => {
+        const response = await url("http://172.23.160.1:3000/auth/login",data);
+        console.log(response)
+    }
+    
     return(
-        <TouchableOpacity onPress={url} style={style.button}>
+        <TouchableOpacity onPress={callback} style={style.button}>
             <Text style={style.text}>{label}</Text>
         </TouchableOpacity>
     )

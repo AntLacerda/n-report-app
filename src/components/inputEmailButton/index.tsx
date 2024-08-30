@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { StyleSheet, View, Text, TextInput } from "react-native";
 
-const InputEmailButton = ({title, place}) => {
-    const [text, onChangeText] = useState('');
-
+const InputEmailButton = ({title, place, state, valueEmail}) => {
     return(
         <View>
             <Text style={styles.title}> {title}:</Text>
             <TextInput 
                 style={styles.input} 
-                onChangeText={onChangeText} 
-                value={text} 
+                onChangeText={state} 
+                value={valueEmail} 
                 placeholder={place} 
                 placeholderTextColor="#fff"
             />
