@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import logo from '../../assets/images/logo.png';
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
@@ -12,7 +12,7 @@ const Signup = () => {
     const [password, setPassword] = useState();
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.logoContainer}>
                 <Image source={logo} style={styles.logoImage} />
             </View>
@@ -34,12 +34,16 @@ const Signup = () => {
                     <TouchableOpacity><Text style={styles.linkUnderlineText}>Login</Text></TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: '#292929',
+        marginTop: 20,
+        padding: 15,
         display: "flex",
         gap: 5
     },
