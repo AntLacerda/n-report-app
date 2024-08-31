@@ -7,6 +7,7 @@ import { InputPasswordButton } from "../../components/inputPasswordButton";
 import { login } from "../../services/login";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase } from "@react-navigation/native";
+import HeaderWithLogo from "../../components/HeaderWithLogo";
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase, "login">
@@ -18,12 +19,7 @@ export default function Login({ navigation }: Props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.logoContainer}>
-                <Image source={logo} style={styles.logoImage} />
-            </View>
-            <View>
-                <Text style={styles.title}>Hey, {`\n`}Bem vindo Novamente!</Text>
-            </View>
+            <HeaderWithLogo image={logo} title={`Hey, ${`\n`}Bem vindo Novamente!`}/>
             <View style={styles.inputContainer}>
                 <InputEmailButton title="E-mail" place="Digite o seu email..." state={setInputEmail} valueEmail={inputEmail} />
                 <InputPasswordButton title="Senha" place="Digite a sua senha..." state={setInputPassword} valuePassword={inputPassword} />
