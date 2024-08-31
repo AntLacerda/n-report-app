@@ -1,13 +1,22 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { useContext } from 'react';
 import useCustomFonts from './assets/fonts/useFonts';
-import { AuthContext, AuthProvider } from './src/contexts/AuthContext';
+import { AuthProvider, AuthContext } from './src/contexts/AuthContext';
 import BottomTabNavigation from './src/routes/private/BottomTabNavigation';
 import StackNavigation from './src/routes/public/StackNavigation';
+import { useContext } from 'react';
+
+function AppContent() {
+  const { isAuth } = useContext(AuthContext);
+
+  return (
+    <NavigationContainer>
+      {isAuth ? <BottomTabNavigation /> : <StackNavigation />}
+    </NavigationContainer>
+  );
+}
 
 export default function App() {
   const [fontsLoaded] = useCustomFonts();
-  const { isAuth } = useContext(AuthContext);
 
   if (!fontsLoaded) {
     return null;
@@ -15,9 +24,7 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <NavigationContainer>
-        {isAuth ? <BottomTabNavigation /> : <StackNavigation />}
-      </NavigationContainer>
+      <AppContent />
     </AuthProvider>
   );
 }
