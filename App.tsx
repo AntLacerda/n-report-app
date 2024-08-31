@@ -1,23 +1,22 @@
+import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import Login from './src/screens/Login';
+import { StyleSheet, View } from 'react-native';
 import useCustomFonts from './assets/fonts/useFonts';
-import Signup from './src/screens/Signup';
+import PublicStackNavigation from './src/routes/public';
 
 export default function App() {
   const [fontsLoaded] = useCustomFonts();
 
-  if(!fontsLoaded) {
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <SafeAreaView>
-        {/* <Login/> */}
-        <Signup />
-      </SafeAreaView>
+      <NavigationContainer>
+        <PublicStackNavigation />
+      </NavigationContainer>
     </View>
   );
 }
