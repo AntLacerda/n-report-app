@@ -6,9 +6,9 @@ const { Navigator, Screen } = createNativeStackNavigator();
 
 const PublicStackNavigation = () => {
     return (
-        <Navigator initialRouteName="login">
-            <Screen name="login" component={Login}/>
-            <Screen name="signup" component={Signup}/>
+        <Navigator initialRouteName="signup" screenOptions={{ headerShown: false, animation: 'slide_from_bottom' }}>
+            <Screen name="login" component={Login} />
+            <Screen name="signup" component={Signup} />
         </Navigator>
     )
 }
