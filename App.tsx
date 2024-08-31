@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { useState } from 'react';
 import useCustomFonts from './assets/fonts/useFonts';
-import PrivateBottomTabNavigation from './src/routes/private/PrivateBottomTabNavigation';
-import PublicStackNavigation from './src/routes/public/PublicStackNavigation';
+import BottomTabNavigation from './src/routes/private/BottomTabNavigation';
+import StackNavigation from './src/routes/public/StackNavigation';
 
 export default function App() {
   const [fontsLoaded] = useCustomFonts();
@@ -14,7 +14,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {isAuth ? <PrivateBottomTabNavigation /> : <PublicStackNavigation />}
+      {isAuth ? <BottomTabNavigation /> : <StackNavigation />}
     </NavigationContainer>
   );
 }

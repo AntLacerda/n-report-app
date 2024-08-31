@@ -8,7 +8,7 @@ import { TouchableOpacity } from 'react-native';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-const PrivateBottomTabNavigation = () => {
+const BottomTabNavigation = () => {
     return (
         <Navigator initialRouteName="Remider" screenOptions={({ route }) => ({
             headerShown: false,
@@ -19,6 +19,7 @@ const PrivateBottomTabNavigation = () => {
                 backgroundColor: "#464646",
                 borderTopLeftRadius: 20,
                 borderTopRightRadius: 20,
+                borderStyle: "dashed",
                 position: 'absolute',
                 overflow: 'hidden',
                 height: 60,
@@ -79,4 +80,4 @@ const PrivateBottomTabNavigation = () => {
     )
 }
 
-export default PrivateBottomTabNavigation;
+export default BottomTabNavigation;

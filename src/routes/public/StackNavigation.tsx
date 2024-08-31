@@ -4,7 +4,7 @@ import Signup from "../../screens/Signup";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
-const PublicStackNavigation = () => {
+const StackNavigation = () => {
     return (
         <Navigator initialRouteName="login" screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
             <Screen name="login" component={Login} />
@@ -13,4 +13,4 @@ const PublicStackNavigation = () => {
     )
 }
 
-export default PublicStackNavigation;
+export default StackNavigation;
