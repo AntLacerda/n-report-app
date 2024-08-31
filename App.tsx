@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import useCustomFonts from './assets/fonts/useFonts';
 import PublicStackNavigation from './src/routes/public';
 
@@ -12,12 +12,9 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <NavigationContainer>
-        <PublicStackNavigation />
-      </NavigationContainer>
-    </View>
+    <NavigationContainer>
+      <PublicStackNavigation />
+    </NavigationContainer>
   );
 }
 
