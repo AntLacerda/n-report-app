@@ -1,32 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
-import Login from './src/screens/Login';
+import { NavigationContainer } from '@react-navigation/native';
+import { useState } from 'react';
 import useCustomFonts from './assets/fonts/useFonts';
-import Signup from './src/screens/Signup';
+import BottomTabNavigation from './src/routes/private/BottomTabNavigation';
+import StackNavigation from './src/routes/public/StackNavigation';
 
 export default function App() {
   const [fontsLoaded] = useCustomFonts();
+  const [isAuth, setIsAuth] = useState(true);
 
-  if(!fontsLoaded) {
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <SafeAreaView>
-        {/* <Login/> */}
-        <Signup />
-      </SafeAreaView>
-    </View>
+    <NavigationContainer>
+      {isAuth ? <BottomTabNavigation /> : <StackNavigation />}
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#292929',
-    marginTop: 20,
-    padding: 15,
-  },
-});
