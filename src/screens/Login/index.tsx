@@ -5,8 +5,14 @@ import { GenericButton } from "../../components/genericButton";
 import { InputEmailButton } from "../../components/inputEmailButton";
 import { InputPasswordButton } from "../../components/inputPasswordButton";
 import { login } from "../../services/login";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ParamListBase } from "@react-navigation/native";
 
-export default function Login() {
+interface Props {
+    navigation: NativeStackNavigationProp<ParamListBase, "login">
+}
+
+export default function Login({ navigation }: Props) {
     const [inputEmail, setInputEmail] = useState('');
     const [inputPassword, setInputPassword] = useState('');
 
@@ -27,7 +33,7 @@ export default function Login() {
             </View>
             <View style={styles.underlineTextContainer}>
                 <Text style={styles.underlineText}>Não possui uma conta? </Text>
-                <TouchableOpacity><Text style={styles.linkUnderlineText}>Criar conta</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("signup")}><Text style={styles.linkUnderlineText}>Criar conta</Text></TouchableOpacity>
             </View>
         </SafeAreaView>
     )

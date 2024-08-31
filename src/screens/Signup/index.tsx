@@ -4,8 +4,14 @@ import logo from '../../assets/images/logo.png';
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
 import { InputPasswordButton } from "../../components/inputPasswordButton";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ParamListBase } from "@react-navigation/native";
 
-const Signup = () => {
+interface Props {
+    navigation: NativeStackNavigationProp<ParamListBase, "signup">
+}
+
+const Signup = ({ navigation }: Props) => {
     const [name, setName] = useState();
     const [CPF, setCPF] = useState();
     const [email, setEmail] = useState();
@@ -31,7 +37,7 @@ const Signup = () => {
                 </View>
                 <View style={styles.underlineTextContainer}>
                     <Text style={styles.underlineText}>Já possui uma conta? </Text>
-                    <TouchableOpacity><Text style={styles.linkUnderlineText}>Login</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("login")}><Text style={styles.linkUnderlineText}>Login</Text></TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>
