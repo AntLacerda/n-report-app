@@ -1,9 +1,10 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../../screens/Home";
 import Map from "../../screens/Map";
-import Report from "../../screens/Report";
 import Profile from "../../screens/Profile";
+import Report from "../../screens/Report";
+import { TouchableOpacity } from 'react-native';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -15,9 +16,24 @@ const PrivateBottomTabNavigation = () => {
             tabBarInactiveTintColor: 'gray',
             tabBarLabelStyle: { fontSize: 13, fontWeight: '400' },
             tabBarStyle: {
-                backgroundColor: "#464646"
+                backgroundColor: "#464646",
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                position: 'absolute',
+                overflow: 'hidden',
+                height: 60,
             },
-            tabBarHideOnKeyboard: true,
+            tabBarButton: (props) => (
+                <TouchableOpacity
+                    {...props}
+                    style={[
+                        props.style,
+                        props.accessibilityState.selected
+                            ? { borderTopColor: "#3BC9DB", borderTopWidth: 2 }
+                            : { borderTopColor: "#292929", borderTopWidth: 2},
+                    ]}
+                />
+            ),
         })}>
             <Screen name="Home" component={Home} options={{
                 tabBarLabel: "Início",
