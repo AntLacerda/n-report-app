@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useContext, useState } from "react";
+import { Alert, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import logo from '../../assets/images/logo.png';
 import { GenericButton } from "../../components/genericButton";
 import { InputEmailButton } from "../../components/inputEmailButton";
@@ -8,24 +8,53 @@ import { login } from "../../services/login";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase } from "@react-navigation/native";
 import HeaderWithLogo from "../../components/HeaderWithLogo";
+import Button from "../../components/Button";
+import { AuthContext } from "../../contexts/AuthContext";
+import api from "../../api/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase, "login">
 }
 
 export default function Login({ navigation }: Props) {
+    const { setIsAuth } = useContext(AuthContext);
     const [inputEmail, setInputEmail] = useState('');
     const [inputPassword, setInputPassword] = useState('');
 
+    const handleLogin = async () => {
+        if (!inputEmail || !inputPassword) {
+            Alert.alert("Erro", "Por favor, preencha todos os campos.");
+            return;
+        }
+
+        try {
+            const response = await api.post("/auth/login", { email: inputEmail, password: inputPassword }).then(response => {
+                return response;
+            });
+            if (response.status == 200) {
+                const token = response.data.token;
+                await AsyncStorage.setItem('token', token);
+                api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                setIsAuth(true);
+            } else {
+                Alert.alert("Erro", "Credenciais inválidas.");
+            }
+        } catch (error) {
+            console.log(error)
+            Alert.alert("Erro", "Algo deu errado. Tente novamente.");
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container}>
-            <HeaderWithLogo image={logo} title={`Hey, ${`\n`}Bem vindo Novamente!`}/>
+            <HeaderWithLogo image={logo} title={`Hey, ${`\n`}Bem vindo Novamente!`} />
             <View style={styles.inputContainer}>
                 <InputEmailButton title="E-mail" place="Digite o seu email..." state={setInputEmail} valueEmail={inputEmail} />
                 <InputPasswordButton title="Senha" place="Digite a sua senha..." state={setInputPassword} valuePassword={inputPassword} />
             </View>
             <View style={styles.loginButton}>
-                <GenericButton label="Login" url={login} data={{ email: inputEmail, password: inputPassword }} />
+                <Button title={"Login"} onPress={handleLogin} />
             </View>
             <View style={styles.underlineTextContainer}>
                 <Text style={styles.underlineText}>Não possui uma conta? </Text>

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useContext, useState } from "react";
+import { Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import logo from '../../assets/images/logo.png';
 import Button from "../../components/Button";
 import { Input } from "../../components/Input";
@@ -7,16 +7,42 @@ import { InputPasswordButton } from "../../components/inputPasswordButton";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase } from "@react-navigation/native";
 import HeaderWithLogo from "../../components/HeaderWithLogo";
+import api from "../../api/api";
+import { AuthContext } from "../../contexts/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase, "signup">
 }
 
 const Signup = ({ navigation }: Props) => {
+    const {setIsAuth} = useContext(AuthContext);
     const [name, setName] = useState();
     const [CPF, setCPF] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+
+    const handleSignup = async () => {
+        if (!name || !CPF || !email || !password) {
+            Alert.alert("Erro", "Por favor, preencha todos os campos.");
+            return;
+        }
+    
+        try {
+            const response = await api.post("/auth/signup", {name, cpf: CPF, email, password}).then(response => {
+                return response;
+            }); 
+            if (response.status) {
+                Alert.alert("Cadastro feito com sucesso!", "Faça login...")
+                navigation.navigate("login")
+            } else {
+                Alert.alert("Erro", "Credenciais inválidas.");
+            }
+        } catch (error) {
+            console.log(error)
+            Alert.alert("Erro", "Algo deu errado. Tente novamente.");
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -30,7 +56,7 @@ const Signup = ({ navigation }: Props) => {
                 </View>
                 <View>
                     <View style={styles.loginButton}>
-                        <Button title={"Cadastrar"} onPress={() => console.log({ CPF, name, email, password })} />
+                        <Button title={"Cadastrar"} onPress={handleSignup} />
                     </View>
                     <View style={styles.underlineTextContainer}>
                         <Text style={styles.underlineText}>Já possui uma conta? </Text>
