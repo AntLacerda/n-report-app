@@ -7,7 +7,7 @@ const HeaderWithLogo = ({image, title}) => {
                 <Image source={image} style={styles.logoImage} />
             </View>
             <View>
-                <Text style={styles.title}>Vamos{`\n`}Começar!</Text>
+                <Text style={styles.title}>{title}</Text>
             </View>
         </>
     )
