@@ -1,14 +1,17 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { TouchableOpacity } from 'react-native';
+import Enter from '../../screens/Enter';
 import Home from "../../screens/Home";
 import Map from "../../screens/Map";
 import Profile from "../../screens/Profile";
 import Report from "../../screens/Report";
-import { TouchableOpacity } from 'react-native';
 
 const { Navigator, Screen } = createBottomTabNavigator();
+const Stack = createNativeStackNavigator()
 
-const BottomTabNavigation = () => {
+const Tabs = () => {
     return (
         <Navigator initialRouteName="Remider" screenOptions={({ route }) => ({
             headerShown: false,
@@ -80,4 +83,13 @@ const BottomTabNavigation = () => {
     )
 }
 
-export default BottomTabNavigation;
+const PrivateRouters = () => {
+    return (
+        <Stack.Navigator initialRouteName="enter" screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+            <Stack.Screen name="enter" component={Enter} />
+            <Stack.Screen name="tabs" component={Tabs} />
+        </Stack.Navigator>
+    )
+}
+
+export default PrivateRouters;
