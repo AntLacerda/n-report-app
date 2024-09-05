@@ -6,6 +6,7 @@ import api from './src/api/api';
 import { AuthContext, AuthProvider } from './src/contexts/AuthContext';
 import PrivateRoutes from './src/routes/private/PrivateRoutes';
 import PublicRoutes from './src/routes/public/PublicRoutes';
+import { StatusBar } from 'expo-status-bar';
 
 function AppContent() {
   const { isAuth, setIsAuth } = useContext(AuthContext);
@@ -53,6 +54,7 @@ export default function App() {
 
   return (
     <AuthProvider>
+      <StatusBar backgroundColor='#292929' style='inverted'/>
       <AppContent />
     </AuthProvider>
   );
