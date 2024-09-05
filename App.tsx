@@ -4,8 +4,8 @@ import { useContext, useEffect, useState } from 'react';
 import useCustomFonts from './assets/fonts/useFonts';
 import api from './src/api/api';
 import { AuthContext, AuthProvider } from './src/contexts/AuthContext';
-import BottomTabNavigation from './src/routes/private/BottomTabNavigation';
-import StackNavigation from './src/routes/public/StackNavigation';
+import PrivateRoutes from './src/routes/private/PrivateRoutes';
+import PublicRoutes from './src/routes/public/PublicRoutes';
 
 function AppContent() {
   const { isAuth, setIsAuth } = useContext(AuthContext);
@@ -39,7 +39,7 @@ function AppContent() {
 
   return (
     <NavigationContainer>
-      {isAuth ? <BottomTabNavigation /> : <StackNavigation />}
+      {isAuth ? <PrivateRoutes /> : <PublicRoutes />}
     </NavigationContainer>
   );
 }

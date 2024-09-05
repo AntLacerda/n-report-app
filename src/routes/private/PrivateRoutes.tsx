@@ -83,7 +83,7 @@ const Tabs = () => {
     )
 }
 
-const BottomTabNavigation = () => {
+const PrivateRouters = () => {
     return (
         <Stack.Navigator initialRouteName="enter" screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
             <Stack.Screen name="enter" component={Enter} />
@@ -92,4 +92,4 @@ const BottomTabNavigation = () => {
     )
 }
 
-export default BottomTabNavigation;
+export default PrivateRouters;
