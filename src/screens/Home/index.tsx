@@ -7,8 +7,12 @@ import groupIcon from "../../assets/icons/groupIcon.png";
 import cineIcon from "../../assets/icons/cineIcon.png";
 import crimeIcon from "../../assets/icons/crimeIcon.png";
 import logo  from "../../assets/images/logo.png";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Home = () => {
+    const { userName } = useContext(AuthContext);
+
     return (
         <ContainerScreen>
             <View style={style.container}>
@@ -16,7 +20,7 @@ const Home = () => {
                     <Image source={logo} style={style.logoContainer}/>
                 </View>
                 <View>
-                    <Text style={style.welcome}>Olá, {/*user*/}</Text>
+                    <Text style={style.welcome}>Olá, {userName}</Text>
                     <Text style={style.welcomeDescription}>Ajude a comunidade a reportar {`\n`}crimes em sua região.</Text>
                 </View>
                 <View style={style.noticeContainer}>
