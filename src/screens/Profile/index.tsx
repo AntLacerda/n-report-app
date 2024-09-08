@@ -1,12 +1,18 @@
-import { Text } from "react-native";
-import ContainerScreen from "../../components/ContainerScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Profile from "./Profile";
+import MyReports from "./MyReports";
+import ChangePassword from "./ChangePassword";
 
-const Profile = () => {
+const { Navigator, Screen } = createNativeStackNavigator();
+
+const ProfileStackNavigation = () => {
     return (
-        <ContainerScreen>
-            <Text>Profile</Text>
-        </ContainerScreen>
+        <Navigator initialRouteName="profile" screenOptions={{ headerShown: false, animation: 'slide_from_bottom' }}>
+            <Screen name="profile" component={Profile} />
+            <Screen name="myReports" component={MyReports} />
+            <Screen name="changePassword" component={ChangePassword} />
+        </Navigator>
     )
 }
 
-export default Profile;
+export default ProfileStackNavigation;
