@@ -7,6 +7,7 @@ import Home from "../../screens/Home";
 import Map from "../../screens/Map";
 import Profile from "../../screens/Profile";
 import Report from "../../screens/Report";
+import { Notice } from '../../screens/Notice';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const Stack = createNativeStackNavigator()
@@ -88,6 +89,7 @@ const PrivateRouters = () => {
         <Stack.Navigator initialRouteName="enter" screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
             <Stack.Screen name="enter" component={Enter} />
             <Stack.Screen name="tabs" component={Tabs} />
+            <Stack.Screen name="notice" component={Notice} />
         </Stack.Navigator>
     )
 }

@@ -1,4 +1,4 @@
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import ContainerScreen from "../../components/ContainerScreen";
 import personImage from "../../assets/images/personImage.png";
 import { StatisticCard } from "../../components/statisticCard";
@@ -9,8 +9,16 @@ import crimeIcon from "../../assets/icons/crimeIcon.png";
 import logo  from "../../assets/images/logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React from "react";
 
-const Home = () => {
+interface Props {
+    navigation: NativeStackNavigationProp<ParamListBase, "enter">
+}
+
+
+const Home = ({navigation}: Props): React.JSX.Element => {
     const { userName } = useContext(AuthContext);
 
     return (
@@ -23,14 +31,16 @@ const Home = () => {
                     <Text style={style.welcome}>Olá, {userName}</Text>
                     <Text style={style.welcomeDescription}>Ajude a comunidade a reportar {`\n`}crimes em sua região.</Text>
                 </View>
-                <View style={style.noticeContainer}>
-                    <View style={style.noticeTextContainer}>
-                        <Text style={style.noticeType}>Notícia</Text>
-                        <Text style={style.noticeTitle}>Funciona mesmo?</Text>
-                        <Text style={style.noticeDescription}>Descubra a importância de reportar um crime no N-Report.</Text>
+                <TouchableOpacity onPress={()=>navigation.navigate("notice")}>
+                    <View style={style.noticeContainer}>
+                        <View style={style.noticeTextContainer}>
+                            <Text style={style.noticeType}>Notícia</Text>
+                            <Text style={style.noticeTitle}>Funciona mesmo?</Text>
+                            <Text style={style.noticeDescription}>Descubra a importância de reportar um crime no N-Report.</Text>
+                        </View>
+                        <Image source={personImage} style={style.noticeImage}/>
                     </View>
-                    <Image source={personImage} style={style.noticeImage}/>
-                </View>
+                </TouchableOpacity>
                 <View>
                     <Text style={style.statisticTitle}>Estatísticas</Text>
                     <View style={style.statisticCardsContainer}>
