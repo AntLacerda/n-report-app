@@ -12,13 +12,14 @@ import Button from "../../components/Button";
 import { AuthContext } from "../../contexts/AuthContext";
 import api from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { findUserById } from "../../services/findUserById";
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase, "login">
 }
 
 export default function Login({ navigation }: Props) {
-    const { setIsAuth } = useContext(AuthContext);
+    const { setIsAuth, setUserName } = useContext(AuthContext);
     const [inputEmail, setInputEmail] = useState('');
     const [inputPassword, setInputPassword] = useState('');
 
@@ -36,6 +37,8 @@ export default function Login({ navigation }: Props) {
                 const token = response.data.token;
                 await AsyncStorage.setItem('token', token);
                 api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                const userName = await findUserById(response.data.userId, token);
+                setUserName(userName);
                 setIsAuth(true);
             } else {
                 Alert.alert("Erro", "Credenciais inválidas.");
