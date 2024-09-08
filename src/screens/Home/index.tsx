@@ -7,19 +7,45 @@ import groupIcon from "../../assets/icons/groupIcon.png";
 import cineIcon from "../../assets/icons/cineIcon.png";
 import crimeIcon from "../../assets/icons/crimeIcon.png";
 import logo  from "../../assets/images/logo.png";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ParamListBase } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
+import { findAllOcurrences } from "../../services/findAllOcurrences";
+import { numberOfindividualOcurrences } from "../../services/numberOfIndividualOcurrences";
+import { numberOfAllMurders } from "../../services/numberOfAllMurders";
+import { numberOfAllTheft } from "../../services/numberOfAllTheft";
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase, "enter">
 }
 
-
 const Home = ({navigation}: Props): React.JSX.Element => {
     const { userName } = useContext(AuthContext);
+    const [ numberOcurrences, setNumberOcurrences ] = useState(0);
+    const [ indiOcurrences, setIndiOcurrences ] = useState(0);
+    const [ numberMurders, setNumberMurders ] = useState(0);
+    const [ numberThefts, setNumberThefts ] = useState(0);
+
+    useEffect(() => {
+        const fetchNumberOfOcurrences = async () => {
+            try {
+                const allOcurrences = await findAllOcurrences();
+                setNumberOcurrences(allOcurrences.length);
+                const numberOfAllOcurrences = await numberOfindividualOcurrences(userName);
+                setIndiOcurrences(numberOfAllOcurrences);
+                const numberAllMurders = await numberOfAllMurders();
+                setNumberMurders(numberAllMurders);
+                const numberAllThefts = await numberOfAllTheft();
+                setNumberThefts(numberAllThefts);
+            } catch (error) {
+                console.log("Error on useEffect!", error);
+            }
+        }
+
+        fetchNumberOfOcurrences(); 
+    }, [])
 
     return (
         <ContainerScreen>
@@ -44,10 +70,10 @@ const Home = ({navigation}: Props): React.JSX.Element => {
                 <View>
                     <Text style={style.statisticTitle}>Estatísticas</Text>
                     <View style={style.statisticCardsContainer}>
-                        <StatisticCard icon={megafoneIcon} title="Reportes Individuais" amount="03"/>
-                        <StatisticCard icon={groupIcon} title="Total de Reportes" amount="25"/>
-                        <StatisticCard icon={cineIcon} title="Total de Homicídios" amount="06"/>
-                        <StatisticCard icon={crimeIcon} title="Reportes de furtos" amount="11"/>
+                        <StatisticCard icon={megafoneIcon} title="Reportes Individuais" amount={indiOcurrences}/>
+                        <StatisticCard icon={groupIcon} title="Total de Reportes" amount={numberOcurrences}/>
+                        <StatisticCard icon={cineIcon} title="Total de Homicídios" amount={numberMurders}/>
+                        <StatisticCard icon={crimeIcon} title="Reportes de furtos" amount={numberThefts}/>
                     </View>
                 </View>
             </View>

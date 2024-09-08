@@ -4,8 +4,8 @@ import ContainerScreen from "../../components/ContainerScreen";
 const Notice = () => {
     return(
         <ContainerScreen>
-            <View>
-                <Text style={style.container}>Noticias</Text>
+            <View style={style.container}>
+                <Text>Noticias</Text>
             </View>
         </ContainerScreen>
     )
@@ -13,7 +13,7 @@ const Notice = () => {
 
 const style = StyleSheet.create({
     container: {
-        backgroundColor: "#292929"
+        
     }
 })
 
