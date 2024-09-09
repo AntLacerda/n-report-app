@@ -6,6 +6,7 @@ import Button from "../../components/Button";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ProfileAvatar from "../../components/ProfileAvatar";
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase, "profile">
@@ -41,10 +42,8 @@ const Profile = ({ navigation }: Props) => {
 
     return (
         <ContainerScreen>
-            <Text>Profile</Text>
-            <TouchableOpacity onPress={handleLogout}>
-                <Text>Logout</Text>
-            </TouchableOpacity>
+            <ProfileAvatar />
+            
         </ContainerScreen>
     )
 }
