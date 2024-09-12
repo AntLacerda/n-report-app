@@ -1,15 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 import { useContext, useEffect, useState } from 'react';
 import useCustomFonts from './assets/fonts/useFonts';
 import api from './src/api/api';
 import { AuthContext, AuthProvider } from './src/contexts/AuthContext';
 import PrivateRoutes from './src/routes/private/PrivateRoutes';
 import PublicRoutes from './src/routes/public/PublicRoutes';
-import { StatusBar } from 'expo-status-bar';
 
 function AppContent() {
-  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const { isAuth, setIsAuth, setUserName } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +19,8 @@ function AppContent() {
 
         if (token) {
           api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+          const userName = (await api.get("/api/v1/users/profile")).data.name;
+          setUserName(userName);
           setIsAuth(true);
         } else {
           setIsAuth(false);
