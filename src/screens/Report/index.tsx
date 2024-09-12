@@ -10,6 +10,7 @@ import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import imageIcon from '../../assets/icons/imageIcon.png';
+import { findAllPoliceStations } from "../../services/findAllPoliceStations";
 
 const Report = () => {
     const [location, setLocation] = useState<LocationObject | null>(null);
@@ -23,8 +24,16 @@ const Report = () => {
     const [showHour, setShowHour] = useState("00:00");
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState("");
+    const [policeStations, setPoliceStations] = useState([]);
+    const [policeStationId, setPoliceStationId] = useState("");
 
     const [imagesPath, setImagesPath] = useState<string[]>([]);
+
+    const createOcurrence = () => {
+        const ocurrence = {
+
+        }
+    }
 
     const handleSelectImages = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -59,6 +68,12 @@ const Report = () => {
         }
     }
 
+    const requestPoliceStations = async () => {
+        const policeStations = await findAllPoliceStations();
+
+        setPoliceStations(policeStations);
+    }
+
     const handleSelectMapPosition = (event: MapPressEvent) => {
         setPosition(event.nativeEvent.coordinate);
     }
@@ -91,6 +106,8 @@ const Report = () => {
 
     useEffect(() => {
         requestLocationPermissions();
+        requestPoliceStations();
+    
     }, []);
 
     return (
@@ -197,6 +214,20 @@ const Report = () => {
                             <Picker.Item label="Tipo do crime" value="" enabled={false}/>
                             <Picker.Item label="Furto" value="furto"/>
                             <Picker.Item label="Assalto" value="Assalto"/>
+                        </Picker>
+
+                        <Picker
+                            selectedValue={policeStationId}
+                            onValueChange={(itemValue, itemIndex)=>setPoliceStationId(itemValue)}    
+                            style={style.genericInput}
+                            dropdownIconColor="#3BC9DB"
+                        >
+                            <Picker.Item label="Delegacia" value="" enabled={false}/>
+                            {
+                                policeStations.map((pStation, index)=>(
+                                    <Picker.Item label={pStation.name} value={pStation.id} key={pStation.id}/>
+                                ))
+                            }
                         </Picker>
 
                         <View style={style.imageContainer}>
