@@ -1,7 +1,8 @@
 import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 import MapView from "react-native-maps";
+import ContainerScreen from "../../components/ContainerScreen";
 
 interface Region {
     latitude: number,
@@ -37,12 +38,18 @@ const Map = () => {
     }, []);
 
     return (
-        <>
-            <MapView
-                style={styles.Map}
-                initialRegion={location}
-            />
-        </>
+        <SafeAreaView style={{flex: 1}}>
+            {location ? (
+                <MapView
+                    style={styles.Map}
+                    initialRegion={location}
+                />
+            ) : (
+                <ContainerScreen>
+                    <></>
+                </ContainerScreen>
+            )}
+        </SafeAreaView>
     );
 };
 
