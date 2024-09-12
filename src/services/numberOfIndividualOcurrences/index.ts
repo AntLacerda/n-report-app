@@ -6,7 +6,7 @@ const numberOfindividualOcurrences = async (userName) => {
         
         const filtro = response.filter(ocurrence => ocurrence.User.name == userName);
 
-        console.log(userName)
+        // console.log(userName)
         return filtro.length;
 
     } catch (error) {
