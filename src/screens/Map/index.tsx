@@ -1,8 +1,10 @@
 import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import ContainerScreen from "../../components/ContainerScreen";
+import Ocurrence from "../../interfaces/Ocurrence";
+import api from "../../api/api";
 
 interface Region {
     latitude: number,
@@ -13,6 +15,7 @@ interface Region {
 
 const Map = () => {
     const [location, setLocation] = useState<Region>(null);
+    const [ocurrences, setOcurrences] = useState<Ocurrence[]>([]);
 
     useEffect(() => {
         (async () => {
@@ -35,6 +38,10 @@ const Map = () => {
                 longitudeDelta: 0.01
             });
         })();
+        (async () => {
+            const ocurrencesApi: Ocurrence[] = (await api.get("api/v1/ocurrences")).data;
+            setOcurrences(ocurrencesApi);
+        })();
     }, []);
 
     return (
@@ -43,7 +50,11 @@ const Map = () => {
                 <MapView
                     style={styles.Map}
                     initialRegion={location}
-                />
+                >
+                    {ocurrences.map((ocurrence) => (
+                        <Marker key={ocurrence.id} description={ocurrence.description} coordinate={{latitude: ocurrence.latitude, longitude: ocurrence.longitude}} />
+                    ))}
+                </MapView>
             ) : (
                 <ContainerScreen>
                     <></>
