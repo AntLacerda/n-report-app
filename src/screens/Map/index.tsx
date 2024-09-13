@@ -45,14 +45,21 @@ const Map = () => {
     }, []);
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{ flex: 1 }}>
             {location ? (
                 <MapView
                     style={styles.Map}
                     initialRegion={location}
                 >
                     {ocurrences.map((ocurrence) => (
-                        <Marker key={ocurrence.id} description={ocurrence.description} coordinate={{latitude: ocurrence.latitude, longitude: ocurrence.longitude}} />
+                        <Marker
+                            key={ocurrence.id}
+                            description={ocurrence.description}
+                            coordinate={{
+                                latitude: ocurrence.latitude,
+                                longitude: ocurrence.longitude
+                            }}
+                        />
                     ))}
                 </MapView>
             ) : (
