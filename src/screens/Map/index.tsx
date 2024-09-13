@@ -1,10 +1,10 @@
 import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import api from "../../api/api";
 import ContainerScreen from "../../components/ContainerScreen";
 import Ocurrence from "../../interfaces/Ocurrence";
-import api from "../../api/api";
 
 interface Region {
     latitude: number,
@@ -54,11 +54,10 @@ const Map = () => {
                     {ocurrences.map((ocurrence) => (
                         <Marker
                             key={ocurrence.id}
+                            title={ocurrence.title}
                             description={ocurrence.description}
-                            coordinate={{
-                                latitude: ocurrence.latitude,
-                                longitude: ocurrence.longitude
-                            }}
+                            coordinate={ocurrence}
+                            onPress={(() => console.log('Should show card crime'))}
                         />
                     ))}
                 </MapView>
