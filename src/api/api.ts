@@ -1,10 +1,9 @@
 import axios from "axios";
-import {API_URL} from "@env"
+import {API_URL} from "@env";
 
-const apiUrl = API_URL;
 
 const api = axios.create({
-    baseURL: apiUrl
+    baseURL: API_URL
 })
 
 export default api
