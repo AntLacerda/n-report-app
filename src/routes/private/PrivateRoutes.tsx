@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator()
 
 const Tabs = () => {
     return (
-        <Navigator initialRouteName="Remider" screenOptions={({ route }) => ({
+        <Navigator initialRouteName="Home" screenOptions={({ route }) => ({
             headerShown: false,
             tabBarActiveTintColor: "#3BC9DB",
             tabBarInactiveTintColor: 'gray',
