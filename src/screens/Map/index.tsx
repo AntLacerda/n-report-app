@@ -5,6 +5,7 @@ import MapView, { Marker } from "react-native-maps";
 import api from "../../api/api";
 import ContainerScreen from "../../components/ContainerScreen";
 import Ocurrence from "../../interfaces/Ocurrence";
+import FloatMessage from "../../components/FloatMessage";
 
 interface Region {
     latitude: number,
@@ -38,6 +39,7 @@ const Map = () => {
                 longitudeDelta: 0.01
             });
         })();
+
         (async () => {
             const ocurrencesApi: Ocurrence[] = (await api.get("api/v1/ocurrences")).data;
             setOcurrences(ocurrencesApi);
@@ -46,6 +48,7 @@ const Map = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <FloatMessage message="Atualize a página para carregar os crimes" />
             {location ? (
                 <MapView
                     style={styles.Map}
