@@ -8,7 +8,8 @@ import Ocurrence from "../../interfaces/Ocurrence";
 import FloatMessage from "../../components/FloatMessage";
 import FloatButton from "../../components/FloatButton";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ParamListBase } from "@react-navigation/native";
+import { ParamListBase, useIsFocused } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 
 interface Region {
     latitude: number,
@@ -22,6 +23,7 @@ interface Props {
 }
 
 const Map = ({ navigation }: Props) => {
+    const isFocused = useIsFocused();
     const [location, setLocation] = useState<Region>(null);
     const [ocurrences, setOcurrences] = useState<Ocurrence[]>([]);
 
@@ -55,6 +57,7 @@ const Map = ({ navigation }: Props) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            {isFocused && <StatusBar hidden />}
             {location ? (
                 <>
                     <FloatMessage message="Atualize a página para carregar os crimes" />
