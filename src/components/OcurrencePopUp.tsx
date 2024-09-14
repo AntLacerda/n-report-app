@@ -44,7 +44,10 @@ const OcurrencePopUp = ({ ocurrence, open, onRequestClose }: Props): React.JSX.E
                                     <Text style={styles.Text}>{ocurrence.description.length > 140 ? `${ocurrence.description.substring(0, 140).trim()}...` : ocurrence.description}</Text>
                                 </View>
                             </View>
-                            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("ocurrenceSummary")}>
+                            <TouchableOpacity style={styles.button} onPress={() => {
+                                onRequestClose()
+                                navigation.navigate("ocurrenceSummary", ocurrence)
+                            }}>
                                 <Text style={styles.Text}>Saiba mais</Text>
                             </TouchableOpacity>
                         </View>
