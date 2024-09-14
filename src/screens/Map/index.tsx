@@ -71,8 +71,6 @@ const Map = ({ navigation }: Props) => {
                         {ocurrences.map((ocurrence) => (
                             <Marker
                                 key={ocurrence.id}
-                                title={ocurrence.title}
-                                description={ocurrence.description}
                                 coordinate={ocurrence}
                                 onPress={() => {
                                     setOpenOcurrencePopUp(true)
