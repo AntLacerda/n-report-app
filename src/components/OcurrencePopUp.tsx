@@ -41,7 +41,7 @@ const OcurrencePopUp = ({ ocurrence, open, onRequestClose }: Props): React.JSX.E
                                 <View>
                                     <Text style={styles.Text}>{ocurrence.date}</Text>
                                     <Text style={styles.Text}>{ocurrence.time}</Text>
-                                    <Text style={styles.Text}>{ocurrence.description}</Text>
+                                    <Text style={styles.Text}>{ocurrence.description.length > 140 ? `${ocurrence.description.substring(0, 140).trim()}...` : ocurrence.description}</Text>
                                 </View>
                             </View>
                             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("ocurrenceSummary")}>
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         padding: 7,
         paddingLeft: 15,
+        paddingBottom: 12,
         alignItems: "center",
         justifyContent: "space-between"
     },
@@ -81,7 +82,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#3BC9DB",
         alignItems: "center",
         justifyContent: "center",
-        padding: 2
+        padding: 2,
+        marginTop: 10
     },
     Info: {
         width: "100%",
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
     button: {
         width: 156,
         backgroundColor: "#3BC9DB",
-        height: 25,
+        height: 30,
         borderRadius: 5,
         alignItems: "center",
         justifyContent: "center"
