@@ -1,15 +1,16 @@
+import { ParamListBase, useIsFocused } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import * as Location from "expo-location";
+import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import api from "../../api/api";
 import ContainerScreen from "../../components/ContainerScreen";
-import Ocurrence from "../../interfaces/Ocurrence";
-import FloatMessage from "../../components/FloatMessage";
 import FloatButton from "../../components/FloatButton";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ParamListBase, useIsFocused } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
+import FloatMessage from "../../components/FloatMessage";
+import OcurrencePopUp from "../../components/OcurrencePopUp";
+import Ocurrence from "../../interfaces/Ocurrence";
 
 interface Region {
     latitude: number,
@@ -26,6 +27,7 @@ const Map = ({ navigation }: Props) => {
     const isFocused = useIsFocused();
     const [location, setLocation] = useState<Region>(null);
     const [ocurrences, setOcurrences] = useState<Ocurrence[]>([]);
+    const [openOcurrencePopUp, setOpenOcurrencePopUp] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
@@ -64,6 +66,7 @@ const Map = ({ navigation }: Props) => {
                     <MapView
                         style={styles.Map}
                         initialRegion={location}
+                        showsUserLocation
                     >
                         {ocurrences.map((ocurrence) => (
                             <Marker
@@ -71,8 +74,12 @@ const Map = ({ navigation }: Props) => {
                                 title={ocurrence.title}
                                 description={ocurrence.description}
                                 coordinate={ocurrence}
-                                onPress={(() => console.log('Should show card crime'))}
-                            />
+                                onPress={() => {
+                                    setOpenOcurrencePopUp(true)
+                                }}
+                            >
+                                <OcurrencePopUp ocurrence={ocurrence} open={openOcurrencePopUp} onRequestClose={() => setOpenOcurrencePopUp(false)} />
+                            </Marker>
                         ))}
                     </MapView>
                     <FloatButton iconName="add-outline" onPress={() => navigation.navigate("Report")} />
