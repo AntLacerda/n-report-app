@@ -1,10 +1,12 @@
-import { Dimensions, Modal, StyleSheet, Text, View } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import { Modal, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import Ocurrence from "../interfaces/Ocurrence";
 
 interface Props {
     ocurrence: Ocurrence;
     open: boolean;
-    onRequestClose: () => void
+    onRequestClose: () => void;
 }
 
 const OcurrencePopUp = ({ ocurrence, open, onRequestClose }: Props): React.JSX.Element => {
@@ -13,16 +15,29 @@ const OcurrencePopUp = ({ ocurrence, open, onRequestClose }: Props): React.JSX.E
             visible={open}
             onRequestClose={onRequestClose}
             animationType="fade"
+            statusBarTranslucent
             transparent
         >
-            <View style={styles.Modal}>
-                <Text>{ocurrence.title}</Text>
-            </View>
+            <TouchableWithoutFeedback onPress={onRequestClose}>
+                <View style={styles.Overlay}>
+                    <TouchableWithoutFeedback>
+                        <View style={styles.Modal}>
+                            <Text style={styles.Title}>{ocurrence.title}</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </View>
+            </TouchableWithoutFeedback>
         </Modal>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
+    Overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     Modal: {
         borderColor: "#3BC9DB",
         borderTopWidth: 5,
@@ -32,13 +47,12 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         justifyContent: 'center',
         alignItems: 'center',
-        top: Dimensions.get("screen").height / 2.7
     },
     Title: {
         fontSize: 16,
-        fontWeight: 600,
+        fontWeight: "600",
         color: "#FFFFFF"
     }
-})
+});
 
 export default OcurrencePopUp;
