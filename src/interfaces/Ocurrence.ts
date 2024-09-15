@@ -13,7 +13,10 @@ interface Ocurrence {
             name: true,
             phone: true,
         }
-    }
+    },
+    Images: {
+        path: string;
+    }[]
 }
 
 export default Ocurrence;
