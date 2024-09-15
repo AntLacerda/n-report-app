@@ -35,6 +35,9 @@ const OcurrenceSummary = (): React.JSX.Element => {
                             src={item.path}
                         />
                     )}
+                    ListEmptyComponent={() => (
+                        <Text style={styles.Text}>A ocorrência não possui nenhuma imagem!</Text>
+                    )}
                 />
         </ContainerScreen>
     )
@@ -86,8 +89,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     Image: {
-        width: 160,
-        height: 160
+        width: 180,
+        height: 180
     },
     columnWrapper: {
         justifyContent: 'space-between',
