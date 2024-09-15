@@ -81,13 +81,6 @@ const styles = StyleSheet.create({
         fontWeight: "400",
         color: "#FFFFFF"
     },
-    Imagens: {
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: 16,
-        justifyContent: "space-between"
-    },
     Image: {
         width: 180,
         height: 180
