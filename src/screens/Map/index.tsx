@@ -27,6 +27,7 @@ const Map = ({ navigation }: Props) => {
     const isFocused = useIsFocused();
     const [location, setLocation] = useState<Region>(null);
     const [ocurrences, setOcurrences] = useState<Ocurrence[]>([]);
+    const [actualOcurrence, setActualOcurrence] = useState<Ocurrence>(null);
     const [openOcurrencePopUp, setOpenOcurrencePopUp] = useState<boolean>(false);
 
     useEffect(() => {
@@ -73,13 +74,13 @@ const Map = ({ navigation }: Props) => {
                                 key={ocurrence.id}
                                 coordinate={ocurrence}
                                 onPress={() => {
+                                    setActualOcurrence(ocurrence);
                                     setOpenOcurrencePopUp(true)
                                 }}
-                            >
-                                <OcurrencePopUp ocurrence={ocurrence} open={openOcurrencePopUp} onRequestClose={() => setOpenOcurrencePopUp(false)} />
-                            </Marker>
+                            />
                         ))}
                     </MapView>
+                    {actualOcurrence && <OcurrencePopUp ocurrence={actualOcurrence} open={openOcurrencePopUp} onRequestClose={() => setOpenOcurrencePopUp(false)} />}
                     <FloatButton iconName="add-outline" onPress={() => navigation.navigate("Report")} />
                 </>
             ) : (
