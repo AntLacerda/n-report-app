@@ -1,4 +1,4 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native"
+import { FlatList, Image, ScrollView, StyleSheet, Text, View } from "react-native"
 import ContainerScreen from "../../components/ContainerScreen"
 import { RouteProp, useIsFocused, useRoute } from "@react-navigation/native"
 import { StatusBar } from "expo-status-bar";
@@ -23,30 +23,19 @@ const OcurrenceSummary = (): React.JSX.Element => {
                 <Text style={styles.Text}>{ocurrence.description}</Text>
             </View>
             <Text style={styles.SubTitle}>Imagens</Text>
-            <ScrollView>
-                <View style={styles.Imagens}>
-                    <Image
-                        style={styles.Image}
-                        src="https://picsum.photos/200/300"
-                    />
-                    <Image
-                        style={styles.Image}
-                        src="https://picsum.photos/200/300"
-                    />
-                    <Image
-                        style={styles.Image}
-                        src="https://picsum.photos/200/300"
-                    />
-                    <Image
-                        style={styles.Image}
-                        src="https://picsum.photos/200/300"
-                    />
-                    <Image
-                        style={styles.Image}
-                        src="https://picsum.photos/200/300"
-                    />
-                </View>
-            </ScrollView>
+            <FlatList
+                    numColumns={2}
+                    keyExtractor={(item, index) => index.toString()}
+                    columnWrapperStyle={styles.columnWrapper}
+                    data={ocurrence.Images}
+                    renderItem={({ item, index }) => (
+                        <Image
+                            key={index}
+                            style={styles.Image}
+                            src={item.path}
+                        />
+                    )}
+                />
         </ContainerScreen>
     )
 }
@@ -99,7 +88,11 @@ const styles = StyleSheet.create({
     Image: {
         width: 160,
         height: 160
-    }
+    },
+    columnWrapper: {
+        justifyContent: 'space-between',
+        marginBottom: 16
+    },
 });
 
 export default OcurrenceSummary;
