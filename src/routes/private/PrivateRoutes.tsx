@@ -91,7 +91,16 @@ const PrivateRouters = () => {
             <Stack.Screen name="enter" component={Enter} />
             <Stack.Screen name="tabs" component={Tabs} />
             <Stack.Screen name="notice" component={Notice} />
-            <Stack.Screen name='ocurrenceSummary' component={OcurrenceSummary} />
+            <Stack.Screen name='ocurrenceSummary' component={OcurrenceSummary} options={{
+                animation: "slide_from_bottom",
+                headerTitle: "",
+                headerShown: true,
+                headerTintColor: "#FFFFFF",
+                statusBarTranslucent: true,
+                headerStyle: {
+                    backgroundColor: "#292929"
+                }
+            }} />
         </Stack.Navigator>
     )
 }
