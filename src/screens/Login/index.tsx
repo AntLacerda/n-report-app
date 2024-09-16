@@ -35,9 +35,11 @@ export default function Login({ navigation }: Props) {
             });
             if (response.status == 200) {
                 const token = response.data.token;
+                const userId = response.data.userId;
                 await AsyncStorage.setItem('token', token);
                 api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                 const userName = await findUserById(response.data.userId, token);
+                await AsyncStorage.setItem('userId', userId);
                 setUserName(userName);
                 setIsAuth(true);
             } else {
