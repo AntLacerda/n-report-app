@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Platform, Button, Image, ScrollView } from "react-native";
+import { Text, View, StyleSheet, TextInput, TouchableOpacity, Platform, Button, Image, ScrollView, Alert } from "react-native";
 import MapView, { Marker, MapPressEvent } from "react-native-maps";
 import { 
     requestForegroundPermissionsAsync,
@@ -11,8 +11,17 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import imageIcon from '../../assets/icons/imageIcon.png';
 import { findAllPoliceStations } from "../../services/findAllPoliceStations";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createOcurrenceRoute } from "../../services/createOcurrenceRoute";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ParamListBase } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
-const Report = () => {
+interface Props {
+    navigation: NativeStackNavigationProp<ParamListBase, "enter">
+}
+
+const Report = ({navigation}:Props) => {
     const [location, setLocation] = useState<LocationObject | null>(null);
     const [position, setPosition] = useState({latitude: 0, longitude: 0});
     const [selectedType, setSelectedType] = useState("");
@@ -27,11 +36,48 @@ const Report = () => {
     const [policeStations, setPoliceStations] = useState([]);
     const [policeStationId, setPoliceStationId] = useState("");
 
-    const [imagesPath, setImagesPath] = useState<string[]>([]);
+    const [imagesPath, setImagesPath] = useState([]);
 
-    const createOcurrence = () => {
-        const ocurrence = {
+    const createOcurrence = async () => {
+        try {
+            const data = new FormData();
+    
+            data.append('title', title);
+            data.append('description', description);
+            data.append('type', selectedType);
+            data.append('latitude', String(location.coords.latitude));
+            data.append('longitude', String(location.coords.longitude));
+            data.append('date', showDate);
+            data.append('time', showHour);
+            data.append('user_id', await AsyncStorage.getItem('userId'));
+            data.append('policeStation_id', policeStationId);
+            
+            imagesPath.forEach((imageURI, index) => {
+                data.append('images', {
+                    name: `image_${index}.jpg`,
+                    type: 'image/jpg',
+                    uri: imageURI,
+                } as any);
+            });
+            
+            //await createOcurrenceRoute(data, await AsyncStorage.getItem('token'));
 
+            navigation.reset({
+                index: 0,
+                routes: [{name: 'Report'}]
+            });
+            
+            navigation.navigate("Map");
+        } catch (error) {
+            if (error.response) {
+                console.error("Error response data:", error.response.data);
+                console.error("Error response status:", error.response.status);
+                console.error("Error response headers:", error.response.headers);
+            } else if (error.request) {
+                console.error("Error request:", error.request);
+            } else {
+                console.error("Error message:", error.message);
+            }
         }
     }
 
@@ -249,7 +295,7 @@ const Report = () => {
                             <Image style={style.updateImageButtonIcon} source={imageIcon}></Image>
                             <Text style={style.updateImageButtonText}>Add imagem</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={style.reportButton}>
+                        <TouchableOpacity style={style.reportButton} onPress={createOcurrence}>
                             <Text style={style.reportButtonText}>Reportar</Text>
                         </TouchableOpacity>
                     </View>
