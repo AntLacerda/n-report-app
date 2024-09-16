@@ -4,15 +4,13 @@ import { Image, StyleSheet, View } from "react-native";
 import api from "../api/api";
 
 const ProfileAvatar = (): React.JSX.Element => {
-    const [avatar, setAvatar] = useState<string>('');
+    const [avatar, setAvatar] = useState<string>("https://static.vecteezy.com/ti/vetor-gratis/p1/7319933-black-avatar-person-icons-user-profile-icon-vetor.jpg");
 
     useEffect(() => {
         async function getAvatar() {
             const userAvatar = (await api.get('/api/v1/users/profile')).data.avatar;
             if (userAvatar != null) {
                 setAvatar(userAvatar);
-            } else {
-                setAvatar('')
             }
         }
 

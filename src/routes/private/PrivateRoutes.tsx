@@ -8,6 +8,7 @@ import Map from "../../screens/Map";
 import Profile from "../../screens/Profile";
 import Report from "../../screens/Report";
 import { Notice } from '../../screens/Notice';
+import OcurrenceSummary from '../../screens/OcurrenceSummary';
 
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -15,7 +16,7 @@ const Stack = createNativeStackNavigator()
 
 const Tabs = () => {
     return (
-        <Navigator initialRouteName="Remider" screenOptions={({ route }) => ({
+        <Navigator initialRouteName="Home" screenOptions={({ route }) => ({
             headerShown: false,
             tabBarActiveTintColor: "#3BC9DB",
             tabBarInactiveTintColor: 'gray',
@@ -92,6 +93,18 @@ const PrivateRouters = () => {
             <Stack.Screen name="tabs" component={Tabs} />
             <Stack.Screen name="notice" component={Notice} />
             <Stack.Screen name="map" component={Map}/>
+            <Stack.Screen name='ocurrenceSummary' component={OcurrenceSummary} options={{
+                animation: "slide_from_bottom",
+                title: null,
+                headerShown: true,
+                headerTintColor: "#FFFFFF",
+                statusBarColor: "#292929",
+                headerShadowVisible: false,
+                headerStyle: {
+                    backgroundColor: "#292929"
+                }
+            }} />
+
         </Stack.Navigator>
     )
 }
