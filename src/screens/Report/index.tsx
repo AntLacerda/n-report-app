@@ -45,8 +45,8 @@ const Report = ({navigation}:Props) => {
             data.append('title', title);
             data.append('description', description);
             data.append('type', selectedType);
-            data.append('latitude', String(location.coords.latitude));
-            data.append('longitude', String(location.coords.longitude));
+            data.append('latitude', String(position.latitude));
+            data.append('longitude', String(position.longitude));
             data.append('date', showDate);
             data.append('time', showHour);
             data.append('user_id', await AsyncStorage.getItem('userId'));
@@ -60,7 +60,7 @@ const Report = ({navigation}:Props) => {
                 } as any);
             });
             
-            //await createOcurrenceRoute(data, await AsyncStorage.getItem('token'));
+            await createOcurrenceRoute(data);
 
             navigation.reset({
                 index: 0,

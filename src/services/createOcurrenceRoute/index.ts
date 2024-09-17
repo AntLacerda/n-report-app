@@ -1,10 +1,9 @@
 import api from "../../api/api"
 
-const createOcurrenceRoute = async (data, token) => {
+const createOcurrenceRoute = async (data) => {
     try {
         const newOcurrence = await api.post("/api/v1/ocurrences/save", data, {
             headers: {
-                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data',
             }
         }).then(response=>{
