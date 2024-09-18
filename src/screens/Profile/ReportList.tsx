@@ -27,7 +27,7 @@ const ReportList = () => {
                         <Text style={styles.Text}>{item.title}</Text>
                     )}
                     ListEmptyComponent={() => (
-                        <Text style={styles.Text}>A ocorrência não possui nenhuma imagem!</Text>
+                        <Text style={styles.Text}>Você não possui nehum reporte!</Text>
                     )}
             />
         </ContainerScreen>
