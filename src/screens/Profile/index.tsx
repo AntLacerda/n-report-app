@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "./Profile";
-import MyReports from "./MyReports";
 import ChangePassword from "./ChangePassword";
 import ChangeLogin from "./ChangeLogin";
+import ReportList from "./ReportList";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -11,10 +11,10 @@ const ProfileStackNavigation = () => {
         <Navigator initialRouteName="profile" screenOptions={{ headerShown: false, animation: 'slide_from_bottom' }}>
             <Screen name="profile" component={Profile} />
             <Screen
-                name="myReports"
-                component={MyReports}
+                name="reportList"
+                component={ReportList}
                 options={{
-                    title: "Meus reportes",
+                    title: "Lista de Reportes",
                     headerTitleAlign: "center",
                     headerShown: true,
                     headerTintColor: "#FFFFFF",

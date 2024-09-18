@@ -3,15 +3,15 @@ import ContainerScreen from "../../components/ContainerScreen"
 import { useIsFocused } from "@react-navigation/native"
 import { StatusBar } from "expo-status-bar";
 
-const MyReports = () => {
+const ReportList = () => {
     const isFocused = useIsFocused();
 
     return (
         <ContainerScreen>
             {isFocused && <StatusBar backgroundColor="#3BC9DB" style="light" animated={true} />}
-            <Text>MyReports</Text>
+            <Text>ReportList</Text>
         </ContainerScreen>
     )
 }
 
-export default MyReports;
+export default ReportList;
