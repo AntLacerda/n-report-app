@@ -8,7 +8,7 @@ const MyReports = () => {
 
     return (
         <ContainerScreen>
-            {isFocused && <StatusBar backgroundColor="#3BC9DB" style="light" />}
+            {isFocused && <StatusBar backgroundColor="#3BC9DB" style="light" animated={true} />}
             <Text>MyReports</Text>
         </ContainerScreen>
     )
