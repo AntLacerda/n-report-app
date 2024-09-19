@@ -12,11 +12,21 @@ const ReportList = () => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        (async () => {
-            const ocurrencesApi: Ocurrence[] = (await api.get("api/v1/ocurrences")).data;
-            setOcurrences(ocurrencesApi);
-        })();
+        (loadOcurrences)();
     }, []);
+
+    const loadOcurrences = async () => {
+        const ocurrencesApi: Ocurrence[] = (await api.get("api/v1/ocurrences")).data;
+        setOcurrences(ocurrencesApi);
+    }
+
+    const deleteOcurrence = async (id: string) => {
+        const { status } = await api.delete(`/api/v1/ocurrences/${id}`)
+
+        if (status === 200) {
+            loadOcurrences();
+        }
+    }
 
     return (
         <ContainerScreen>
@@ -25,7 +35,7 @@ const ReportList = () => {
                     contentContainerStyle={styles.Content}
                     data={ocurrences}
                     renderItem={({ item }) => (
-                        <OcurrenceCard key={item.id} ocurrence={item} />
+                        <OcurrenceCard key={item.id} ocurrence={item} onDeleteOcurrence={() => deleteOcurrence(item.id)} />
                     )}
                     ListEmptyComponent={() => (
                         <Text style={styles.Text}>Você não possui nenhum reporte!</Text>

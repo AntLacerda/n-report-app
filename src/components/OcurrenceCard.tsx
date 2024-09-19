@@ -1,16 +1,29 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Ocurrence from "../interfaces/Ocurrence";
+import api from '../api/api';
 
 interface Props {
-    ocurrence: Ocurrence
+    ocurrence: Ocurrence,
+    onDeleteOcurrence: () => void
 }
 
-const OcurrenceCard = ({ ocurrence }: Props): React.JSX.Element => {
+const OcurrenceCard = ({ ocurrence, onDeleteOcurrence }: Props): React.JSX.Element => {
 
-    const handleDelete = async () => {
-
+    const handleDelete = () => {
+        Alert.alert("Excluir reporte", "Tem certeza que deseja excluir esse reporte?", [
+            {
+                text: "Não",
+                style: "cancel"
+            },
+            {
+                isPreferred: true,
+                text: "Sim",
+                onPress: onDeleteOcurrence,
+                style: "default"
+            }
+        ])
     }
 
     return (
