@@ -28,7 +28,7 @@ const ReportList = () => {
                         <OcurrenceCard key={item.id} ocurrence={item} />
                     )}
                     ListEmptyComponent={() => (
-                        <Text style={styles.Text}>Você não possui nehum reporte!</Text>
+                        <Text style={styles.Text}>Você não possui nenhum reporte!</Text>
                     )}
             />
         </ContainerScreen>
