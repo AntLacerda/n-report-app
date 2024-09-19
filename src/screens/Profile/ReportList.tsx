@@ -2,12 +2,14 @@ import { useIsFocused } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { FlatList, StyleSheet, Text } from "react-native";
 import ContainerScreen from "../../components/ContainerScreen";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Ocurrence from "../../interfaces/Ocurrence";
 import api from "../../api/api";
 import OcurrenceCard from "../../components/OcurrenceCard";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const ReportList = () => {
+    const { isAdmin } = useContext(AuthContext);
     const [ocurrences, setOcurrences] = useState<Ocurrence[]>([]);
     const isFocused = useIsFocused();
 
@@ -16,7 +18,14 @@ const ReportList = () => {
     }, []);
 
     const loadOcurrences = async () => {
-        const ocurrencesApi: Ocurrence[] = (await api.get("api/v1/ocurrences")).data;
+        let ocurrencesApi: Ocurrence[] = [];
+
+        if(isAdmin) {
+            ocurrencesApi = (await api.get("api/v1/ocurrences")).data;
+        } else {
+            ocurrencesApi = (await api.get("api/v1/ocurrences/self")).data;
+        }
+
         setOcurrences(ocurrencesApi);
     }
 
@@ -32,14 +41,14 @@ const ReportList = () => {
         <ContainerScreen>
             {isFocused && <StatusBar backgroundColor="#3BC9DB" style="light" animated={true} />}
             <FlatList
-                    contentContainerStyle={styles.Content}
-                    data={ocurrences}
-                    renderItem={({ item }) => (
-                        <OcurrenceCard key={item.id} ocurrence={item} onDeleteOcurrence={() => deleteOcurrence(item.id)} />
-                    )}
-                    ListEmptyComponent={() => (
-                        <Text style={styles.Text}>Você não possui nenhum reporte!</Text>
-                    )}
+                contentContainerStyle={styles.Content}
+                data={ocurrences}
+                renderItem={({ item }) => (
+                    <OcurrenceCard key={item.id} ocurrence={item} onDeleteOcurrence={() => deleteOcurrence(item.id)} />
+                )}
+                ListEmptyComponent={() => (
+                    <Text style={styles.Text}>Você não possui nenhum reporte!</Text>
+                )}
             />
         </ContainerScreen>
     )
