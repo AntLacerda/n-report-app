@@ -5,6 +5,7 @@ import ContainerScreen from "../../components/ContainerScreen";
 import { useEffect, useState } from "react";
 import Ocurrence from "../../interfaces/Ocurrence";
 import api from "../../api/api";
+import OcurrenceCard from "../../components/OcurrenceCard";
 
 const ReportList = () => {
     const [ocurrences, setOcurrences] = useState<Ocurrence[]>([]);
@@ -23,8 +24,8 @@ const ReportList = () => {
             <FlatList
                     contentContainerStyle={styles.Content}
                     data={ocurrences}
-                    renderItem={({ item, index }) => (
-                        <Text style={styles.Text}>{item.title}</Text>
+                    renderItem={({ item }) => (
+                        <OcurrenceCard key={item.id} ocurrence={item} />
                     )}
                     ListEmptyComponent={() => (
                         <Text style={styles.Text}>Você não possui nehum reporte!</Text>
@@ -36,7 +37,9 @@ const ReportList = () => {
 
 const styles = StyleSheet.create({
     Content: {
-        alignItems: 'center'
+        paddingBottom: 50,
+        alignItems: 'center',
+        gap: 15
     },
     Text: {
         fontSize: 15.89,
