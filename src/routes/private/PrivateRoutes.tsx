@@ -98,8 +98,6 @@ const PrivateRouters = () => {
                 title: null,
                 headerShown: true,
                 headerTintColor: "#FFFFFF",
-                statusBarColor: "#292929",
-                headerShadowVisible: false,
                 headerStyle: {
                     backgroundColor: "#292929"
                 }

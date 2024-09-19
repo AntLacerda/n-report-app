@@ -1,17 +1,13 @@
 import api from "../../api/api";
 
-const findUserById = async (userId: string, token: string) => {
+const findUserById = async () => {
     try {
-        const user = await api.get(`/api/v1/users/profile`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
+        const user = await api.get(`/api/v1/users/profile`)
         .then(response => {
             return response.data;
         });
 
-        return user.name;
+        return user;
     } catch (error) {
         console.log("Error on try find user by id!", error);
     }
