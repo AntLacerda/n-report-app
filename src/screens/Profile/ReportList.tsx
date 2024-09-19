@@ -1,12 +1,12 @@
 import { useIsFocused } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { FlatList, StyleSheet, Text } from "react-native";
-import ContainerScreen from "../../components/ContainerScreen";
 import { useContext, useEffect, useState } from "react";
-import Ocurrence from "../../interfaces/Ocurrence";
+import { FlatList, StyleSheet, Text } from "react-native";
 import api from "../../api/api";
+import ContainerScreen from "../../components/ContainerScreen";
 import OcurrenceCard from "../../components/OcurrenceCard";
 import { AuthContext } from "../../contexts/AuthContext";
+import Ocurrence from "../../interfaces/Ocurrence";
 
 const ReportList = () => {
     const { isAdmin } = useContext(AuthContext);
@@ -20,7 +20,7 @@ const ReportList = () => {
     const loadOcurrences = async () => {
         let ocurrencesApi: Ocurrence[] = [];
 
-        if(isAdmin) {
+        if (isAdmin) {
             ocurrencesApi = (await api.get("api/v1/ocurrences")).data;
         } else {
             ocurrencesApi = (await api.get("api/v1/ocurrences/self")).data;
@@ -44,7 +44,11 @@ const ReportList = () => {
                 contentContainerStyle={styles.Content}
                 data={ocurrences}
                 renderItem={({ item }) => (
-                    <OcurrenceCard key={item.id} ocurrence={item} onDeleteOcurrence={() => deleteOcurrence(item.id)} />
+                    <OcurrenceCard
+                        key={item.id}
+                        ocurrence={item}
+                        onDeleteOcurrence={() => deleteOcurrence(item.id)}
+                    />
                 )}
                 ListEmptyComponent={() => (
                     <Text style={styles.Text}>Você não possui nenhum reporte!</Text>
