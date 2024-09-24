@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface Props {
-    message: string
+    message: string,
+    onPress: () => void
 }
 
-const FloatMessage = ({ message }: Props): React.JSX.Element => {
+const FloatMessage = ({ message, onPress }: Props): React.JSX.Element => {
     return (
-        <View style={styles.FloatMessage}>
+        <TouchableOpacity style={styles.FloatMessage} onPress={onPress}>
             <Text style={styles.Text}>{message}</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 

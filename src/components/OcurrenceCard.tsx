@@ -3,13 +3,19 @@ import React from "react";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Ocurrence from "../interfaces/Ocurrence";
 import api from '../api/api';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import EditReport from '../screens/EditReport';
 
 interface Props {
     ocurrence: Ocurrence,
     onDeleteOcurrence: () => void
 }
 
+type NagivigationProps = NativeStackNavigationProp<ParamListBase, "OcurrenceCard">;
+
 const OcurrenceCard = ({ ocurrence, onDeleteOcurrence }: Props): React.JSX.Element => {
+    const navigation = useNavigation<NagivigationProps>();
 
     const handleDelete = () => {
         Alert.alert("Excluir reporte", "Tem certeza que deseja excluir esse reporte?", [
@@ -48,9 +54,7 @@ const OcurrenceCard = ({ ocurrence, onDeleteOcurrence }: Props): React.JSX.Eleme
                     <Text style={styles.Text}>{ocurrence.description.length > 140 ? `${ocurrence.description.substring(0, 140).trim()}...` : ocurrence.description}</Text>
                 </View>
             </View>
-            <TouchableOpacity style={styles.button} onPress={() => {
-                console.log('Go to edit ocurrence page')
-            }}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('editReport', {ocurrence} )}>
                 <Text style={styles.Text}>Editar</Text>
             </TouchableOpacity>
         </View>
