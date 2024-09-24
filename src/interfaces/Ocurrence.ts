@@ -8,13 +8,17 @@ interface Ocurrence {
     date: string,
     time: string,
     resolved: boolean,
+    User: {
+        id: string,
+        name: string
+    }
     PoliceStation: {
-        select: {
-            name: true,
-            phone: true,
-        }
+        id: string,
+        name: string,
+        phone: string,
     },
     Images: {
+        id: string,
         path: string;
     }[]
 }

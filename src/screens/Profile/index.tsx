@@ -3,6 +3,7 @@ import Profile from "./Profile";
 import ChangePassword from "./ChangePassword";
 import ChangeLogin from "./ChangeLogin";
 import ReportList from "./ReportList";
+import EditReport from "../EditReport";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ const ProfileStackNavigation = () => {
             />
             <Screen name="changePassword" component={ChangePassword} />
             <Screen name="chnageLogin" component={ChangeLogin} />
+            <Screen name="editReport" component={EditReport} />
         </Navigator>
     )
 }

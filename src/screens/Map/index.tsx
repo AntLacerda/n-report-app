@@ -52,18 +52,20 @@ const Map = ({ navigation }: Props) => {
             });
         })();
 
-        (async () => {
-            const ocurrencesApi: Ocurrence[] = (await api.get("api/v1/ocurrences")).data;
-            setOcurrences(ocurrencesApi);
-        })();
+        getOcurrences();
     }, []);
+
+    const getOcurrences = async () => {
+        const ocurrencesApi: Ocurrence[] = (await api.get("api/v1/ocurrences")).data;
+        setOcurrences(ocurrencesApi);
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
             {isFocused && <StatusBar hidden />}
             {location ? (
                 <>
-                    <FloatMessage message="Atualize a página para carregar os crimes" />
+                    <FloatMessage message="Atualize a página para carregar os crimes" onPress={() => getOcurrences()} />
                     <MapView
                         style={styles.Map}
                         initialRegion={location}
