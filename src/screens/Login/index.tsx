@@ -13,6 +13,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import api from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { findUserById } from "../../services/findUserById";
+import React from "react";
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase, "login">
