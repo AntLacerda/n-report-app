@@ -16,6 +16,7 @@ import { createOcurrenceRoute } from "../../services/createOcurrenceRoute";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ParamListBase } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+import { z } from "zod";
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase, "enter">
@@ -38,46 +39,90 @@ const Report = ({navigation}:Props) => {
 
     const [imagesPath, setImagesPath] = useState([]);
 
+    const ocurrenceSchema = z.object({
+        title: z.string().min(1, 'Title is required'),
+        description: z.string().min(1, 'Description is required'),
+        selectedType: z.string().min(1, 'Type is required'),
+        latitude: z.string().min(1, 'Latitude is required'),
+        longitude: z.string().min(1, 'Longitude is required'),
+        date: z.string().min(1, 'Date is required'),
+        time: z.string().min(1, 'Time is required'),
+        user_id: z.string().min(1, 'User ID is required'),
+        policeStation_id: z.string().min(1, 'Police Station ID is required'),
+        imagesPath: z.array(z.string()).min(1, 'At least one image is required'),
+    });
+    
     const createOcurrence = async () => {
         try {
-            const data = new FormData();
-    
-            data.append('title', title);
-            data.append('description', description);
-            data.append('type', selectedType);
-            data.append('latitude', String(position.latitude));
-            data.append('longitude', String(position.longitude));
-            data.append('date', showDate);
-            data.append('time', showHour);
-            data.append('user_id', await AsyncStorage.getItem('userId'));
-            data.append('policeStation_id', policeStationId);
-            
-            imagesPath.forEach((imageURI, index) => {
-                data.append('images', {
-                    name: `image_${index}.jpg`,
-                    type: 'image/jpg',
-                    uri: imageURI,
-                } as any);
-            });
-            
-            await createOcurrenceRoute(data);
-
-            navigation.reset({
-                index: 0,
-                routes: [{name: 'Report'}]
-            });
-            
-            navigation.navigate("Map");
+          // Obtenha dados do estado ou fontes externas
+          const user_id = await AsyncStorage.getItem('userId');
+      
+          // Dados que queremos validar com Zod
+          const ocurrenceData = {
+            title,
+            description,
+            selectedType,
+            latitude: String(position.latitude),
+            longitude: String(position.longitude),
+            date: showDate,
+            time: showHour,
+            user_id,
+            policeStation_id: policeStationId,
+            imagesPath,
+          };
+      
+          // Valida os dados com o schema Zod
+          const validationResult = ocurrenceSchema.safeParse(ocurrenceData);
+      
+          // Se a validação falhar, lance um erro
+          if (!validationResult.success) {
+            const validationErrors = validationResult.error.format();
+            console.error("Validation Errors:", validationErrors);
+            return; // Você pode exibir um alerta ao usuário com os erros ou interromper o fluxo
+          }
+      
+          // Criar o FormData se os dados forem válidos
+          const data = new FormData();
+      
+          data.append('title', validationResult.data.title);
+          data.append('description', validationResult.data.description);
+          data.append('type', validationResult.data.selectedType);
+          data.append('latitude', validationResult.data.latitude);
+          data.append('longitude', validationResult.data.longitude);
+          data.append('date', validationResult.data.date);
+          data.append('time', validationResult.data.time);
+          data.append('user_id', validationResult.data.user_id || '');
+          data.append('policeStation_id', validationResult.data.policeStation_id);
+      
+          validationResult.data.imagesPath.forEach((imageURI, index) => {
+            data.append('images', {
+              name: `image_${index}.jpg`,
+              type: 'image/jpg',
+              uri: imageURI,
+            } as any);
+          });
+      
+          // Enviar a requisição com os dados validados
+          await createOcurrenceRoute(data);
+      
+          // Resetar e navegar para a próxima página
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'Report' }]
+          });
+      
+          navigation.navigate("Map");
+      
         } catch (error) {
-            if (error.response) {
-                console.error("Error response data:", error.response.data);
-                console.error("Error response status:", error.response.status);
-                console.error("Error response headers:", error.response.headers);
-            } else if (error.request) {
-                console.error("Error request:", error.request);
-            } else {
-                console.error("Error message:", error.message);
-            }
+          if (error.response) {
+            console.error("Error response data:", error.response.data);
+            console.error("Error response status:", error.response.status);
+            console.error("Error response headers:", error.response.headers);
+          } else if (error.request) {
+            console.error("Error request:", error.request);
+          } else {
+            console.error("Error message:", error.message);
+          }
         }
     }
 
