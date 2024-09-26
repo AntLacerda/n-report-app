@@ -25,7 +25,19 @@ const ProfileStackNavigation = () => {
                 }}
             />
             <Screen name="changePassword" component={ChangePassword} />
-            <Screen name="chnageLogin" component={ChangeLogin} />
+            <Screen
+                name="changeLogin"
+                component={ChangeLogin}
+                options={{
+                    title: "Mudar Login",
+                    headerTitleAlign: "center",
+                    headerShown: true,
+                    headerTintColor: "#FFFFFF",
+                    headerStyle: {
+                        backgroundColor: "#3BC9DB"
+                    }
+                }}
+            />
             <Screen name="editReport" component={EditReport} />
         </Navigator>
     )

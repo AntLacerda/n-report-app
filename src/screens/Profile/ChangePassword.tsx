@@ -1,13 +1,15 @@
 import { Text, StyleSheet, View, TextInput, TouchableOpacity } from "react-native"
 import ContainerScreen from "../../components/ContainerScreen"
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { InputPasswordButton } from "../../components/inputPasswordButton";
 import api from "../../api/api";
+import { StatusBar } from "expo-status-bar";
 
 const ChangePassword = () => {
     const navigation = useNavigation();
+    const isFocused = useIsFocused();
     const [actualPass, setactualPass] = useState("");
     const [newPass, setNewPass] = useState("");
     const [newPassAgain, setNewPassAgain] = useState("");
@@ -30,6 +32,7 @@ const ChangePassword = () => {
 
     return (
         <View style={style.resetPasswordContainer}>
+            {isFocused && <StatusBar backgroundColor="#3BC9DB" style="light" animated={true} />}
             <View style={style.initResetPassword}>
                 <Text style={style.textInitResetPassword}>Mudar senha</Text>
             </View>
