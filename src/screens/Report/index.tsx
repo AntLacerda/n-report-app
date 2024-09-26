@@ -54,10 +54,10 @@ const Report = ({navigation}:Props) => {
     
     const createOcurrence = async () => {
         try {
-          // Obtenha dados do estado ou fontes externas
+          
           const user_id = await AsyncStorage.getItem('userId');
       
-          // Dados que queremos validar com Zod
+          
           const ocurrenceData = {
             title,
             description,
@@ -71,17 +71,17 @@ const Report = ({navigation}:Props) => {
             imagesPath,
           };
       
-          // Valida os dados com o schema Zod
+          
           const validationResult = ocurrenceSchema.safeParse(ocurrenceData);
       
-          // Se a validação falhar, lance um erro
+          
           if (!validationResult.success) {
             const validationErrors = validationResult.error.format();
             console.error("Validation Errors:", validationErrors);
-            return; // Você pode exibir um alerta ao usuário com os erros ou interromper o fluxo
+            return; 
           }
       
-          // Criar o FormData se os dados forem válidos
+          
           const data = new FormData();
       
           data.append('title', validationResult.data.title);
@@ -102,10 +102,10 @@ const Report = ({navigation}:Props) => {
             } as any);
           });
       
-          // Enviar a requisição com os dados validados
+          
           await createOcurrenceRoute(data);
       
-          // Resetar e navegar para a próxima página
+          
           navigation.reset({
             index: 0,
             routes: [{ name: 'Report' }]

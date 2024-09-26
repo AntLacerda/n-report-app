@@ -72,7 +72,7 @@ const EditReport = ({ navigation }: Props) => {
             if (status === 200) {
                 navigation.reset({
                     index: 0,
-                    routes: [{ name: 'reportList' }]
+                    routes: [{ name: 'profile' }]
                 })
             }
         } catch (error) {
